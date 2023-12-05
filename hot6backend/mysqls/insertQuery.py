@@ -8,9 +8,10 @@ class InsertQuery:
         self.cur=self.conn.cursor()
 
     def insertNewChat(self):
-        new_cht_id=uuid.uuid4()
+        new_cht_id=str(uuid.uuid4())
         self.cur.execute(f'INSERT INTO tct.tct_mst (skt_id, cht_id) VALUES(\'{self.skt_id}\', \'{new_cht_id}\')')
         self.conn.commit()
+        print(new_cht_id)
 
         result_dict={}
         result_dict['data']=[]
@@ -22,7 +23,7 @@ class InsertQuery:
 
         return result_dict
 
-    def insertQuestionAnswer(self, req, output):
+    def insertHistory(self, req, output):
         cht_id=req['cht_id']
         context=req['context']
         self.cur.execute(f'INSERT INTO tct.tct_hst (cht_id, question, answer) VALUES(\'{cht_id}\', \'{context}\', \'{output}\')')
